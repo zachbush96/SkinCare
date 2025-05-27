@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skin Tracker Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1a1a2e;
+      --bg-card: #16213e;
+      --accent-primary: #00d4aa;
+      --accent-secondary: #7c3aed;
+      --accent-danger: #ef4444;
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #334155;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --glow: 0 0 20px rgba(0, 212, 170, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--glow), var(--shadow);
+    }
+
+    .form-section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.row {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+    }
+
+    input[type="number"] {
+      text-align: center;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+    }
+
+    .toggle-group {
+      display: flex;
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .toggle-option {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .toggle-option.active {
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
+    }
+
+    .slider-value {
+      min-width: 30px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--accent-primary);
+    }
+
+    .chip-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .chip.selected {
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      border-color: var(--accent-primary);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 16px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .entry {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .entry:hover {
+      transform: translateX(4px);
+      border-color: var(--accent-primary);
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .entry-date {
+      font-weight: 600;
+      color: var(--accent-primary);
+    }
+
+    .entry-delete {
+      background: var(--accent-danger);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .entry-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .entry-row:last-child {
+      border-bottom: none;
+    }
+
+    .entry-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .entry-value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .floating-fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .floating-fab:hover {
+      transform: scale(1.1);
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 400px;
+      width: 100%;
+      border: 1px solid var(--glass-border);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      z-index: 3000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px 12px;
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>✨ Skin Tracker Pro</h1>
+      <p>Track your skincare journey with insights</p>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-value" id="totalEntries">0</div>
+        <div class="stat-label">Total Entries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="streakDays">0</div>
+        <div class="stat-label">Day Streak</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <form id="logForm">
+        <div class="form-section">
+          <div class="section-title">📅 Basic Info</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+              <label>Face Washed?</label>
+              <div class="toggle-group">
+                <button type="button" class="toggle-option" data-value="true">Yes ✓</button>
+                <button type="button" class="toggle-option" data-value="false">No ✗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">🧴 Products</div>
+          <div class="form-group">
+            <label>Select products used</label>
+            <div class="chip-container" id="productChips">
+              <div class="chip" data-product="Nizoral">Nizoral</div>
+              <div class="chip" data-product="PanOxyl 4%">PanOxyl 4%</div>
+              <div class="chip" data-product="Vanicream Lite">Vanicream Lite</div>
+              <div class="chip" data-product="La Roche-Posay Cicaplast">La Roche-Posay</div>
+              <div class="chip" data-product="The Ordinary Niacinamide">Niacinamide</div>
+              <div class="chip" data-product="Azelaic Acid">Azelaic Acid</div>
+            </div>
+            <input type="text" id="customProduct" placeholder="Add custom product...">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">🏃‍♂️ Lifestyle</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Alcohol (Drinks)</label>
+              <input type="number" id="alcohol" min="0" max="20" value="0">
+            </div>
+            <div class="form-group">
+              <label>Sleep Quality</label>
+              <div class="slider-container">
+                <input type="range" id="sleep" class="slider" min="0" max="10" value="7">
+                <div class="slider-value" id="sleepValue">7</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Activities</label>
+            <div class="chip-container" id="activityChips">
+              <div class="chip" data-activity="Gym">💪 Gym</div>
+              <div class="chip" data-activity="Walk">🚶‍♂️ Walk</div>
+              <div class="chip" data-activity="Hot Weather">☀️ Hot Weather</div>
+              <div class="chip" data-activity="Office">💼 Office</div>
+              <div class="chip" data-activity="Sleep Shirtless">😴 Sleep Shirtless</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">📊 Skin Status</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>New Spots</label>
+              <input type="text" id="newSpots" placeholder="Count or location...">
+            </div>
+            <div class="form-group">
+              <label>Improvements</label>
+              <input type="text" id="improved" placeholder="What got better...">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">📝 Notes</div>
+          <div class="form-group">
+            <textarea id="notes" placeholder="Additional observations, mood, diet changes..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn">💾 Save Entry</button>
+        <button type="button" class="btn btn-secondary" onclick="downloadCSV()" style="margin-top: 12px;">📥 Export Data</button>
+      </form>
+    </div>
+
+    <div class="section-title" style="margin: 32px 0 16px 0;">📈 Your Logs</div>
+    <div id="logContainer"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let logs = {};
+    let selectedProducts = [];
+    let selectedActivities = [];
+    let washedValue = true;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeForm();
+      loadLogs();
+      updateStats();
+    });
+
+    function initializeForm() {
+      // Set today's date
+      document.getElementById('date').value = new Date().toISOString().split('T')[0];
+      
+      // Initialize toggle buttons
+      initializeToggle();
+      
+      // Initialize product chips
+      initializeProductChips();
+      
+      // Initialize activity chips
+      initializeActivityChips();
+      
+      // Initialize sleep slider
+      initializeSleepSlider();
+      
+      // Initialize custom product input
+      initializeCustomProduct();
+    }
+
+    function initializeToggle() {
+      const toggleButtons = document.querySelectorAll('.toggle-option');
+      toggleButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          toggleButtons.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          washedValue = this.dataset.value === 'true';
+        });
+      });
+      // Set default
+      toggleButtons[0].classList.add('active');
+    }
+
+    function initializeProductChips() {
+      const chips = document.querySelectorAll('#productChips .chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', function() {
+          const product = this.dataset.product;
+          if (this.classList.contains('selected')) {
+            this.classList.remove('selected');
+            selectedProducts = selectedProducts.filter(p => p !== product);
+          } else {
+            this.classList.add('selected');
+            selectedProducts.push(product);
+          }
+        });
+      });
+    }
+
+    function initializeActivityChips() {
+      const chips = document.querySelectorAll('#activityChips .chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', function() {
+          const activity = this.dataset.activity;
+          if (this.classList.contains('selected')) {
+            this.classList.remove('selected');
+            selectedActivities = selectedActivities.filter(a => a !== activity);
+          } else {
+            this.classList.add('selected');
+            selectedActivities.push(activity);
+          }
+        });
+      });
+    }
+
+    function initializeSleepSlider() {
+      const slider = document.getElementById('sleep');
+      const valueDisplay = document.getElementById('sleepValue');
+      
+      slider.addEventListener('input', function() {
+        valueDisplay.textContent = this.value;
+      });
+    }
+
+    function initializeCustomProduct() {
+      const input = document.getElementById('customProduct');
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const value = this.value.trim();
+          if (value && !selectedProducts.includes(value)) {
+            selectedProducts.push(value);
+            addCustomProductChip(value);
+            this.value = '';
+          }
+        }
+      });
+    }
+
+    function addCustomProductChip(product) {
+      const container = document.getElementById('productChips');
+      const chip = document.createElement('div');
+      chip.className = 'chip selected';
+      chip.textContent = product;
+      chip.addEventListener('click', function() {
+        this.remove();
+        selectedProducts = selectedProducts.filter(p => p !== product);
+      });
+      container.appendChild(chip);
+    }
+
+    function loadLogs() {
+      try {
+        logs = JSON.parse(localStorage.getItem('skincare-log')) || {};
+      } catch (e) {
+        logs = {};
+      }
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('logContainer');
+      const dates = Object.keys(logs).sort().reverse();
+      
+      if (dates.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📊</div>
+            <p>No entries yet. Start tracking your skin journey!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '';
+      dates.forEach(date => {
+        const log = logs[date];
+        const entry = document.createElement('div');
+        entry.className = 'entry';
+        
+        const products = Array.isArray(log.products) ? log.products : [];
+        const activities = Array.isArray(log.sweat) ? log.sweat : (log.sweat ? [log.sweat] : []);
+        
+        entry.innerHTML = `
+          <div class="entry-header">
+            <div class="entry-date">${formatDate(date)}</div>
+            <button class="entry-delete" onclick="deleteEntry('${date}')">🗑️</button>
+          </div>
+          <div class="entry-row">
+            <span class="entry-label">Face Washed</span>
+            <span class="entry-value">${log.washed ? '✅ Yes' : '❌ No'}</span>
+          </div>
+          <div class="entry-row">
+            <span class="entry-label">Products</span>
+            <span class="entry-value">${products.length ? products.join(', ') : 'None'}</span>
+          </div>
+          <div class="entry-row">
+            <span class="entry-label">Sleep Quality</span>
+            <span class="entry-value">${log.sleep}/10 ${'⭐'.repeat(Math.ceil(log.sleep/2))}</span>
+          </div>
+          <div class="entry-row">
+            <span class="entry-label">Alcohol</span>
+            <span class="entry-value">${log.alcohol} drinks</span>
+          </div>
+          ${activities.length ? `
+          <div class="entry-row">
+            <span class="entry-label">Activities</span>
+            <span class="entry-value">${activities.join(', ')}</span>
+          </div>
+          ` : ''}
+          ${log.newSpots ? `
+          <div class="entry-row">
+            <span class="entry-label">New Spots</span>
+            <span class="entry-value">${log.newSpots}</span>
+          </div>
+          ` : ''}
+          ${log.improved ? `
+          <div class="entry-row">
+            <span class="entry-label">Improvements</span>
+            <span class="entry-value">${log.improved}</span>
+          </div>
+          ` : ''}
+          ${log.notes ? `
+          <div class="entry-row">
+            <span class="entry-label">Notes</span>
+            <span class="entry-value">${log.notes}</span>
+          </div>
+          ` : ''}
+        `;
+        
+        container.appendChild(entry);
+      });
+    }
+
+    function deleteEntry(date) {
+      if (confirm('Delete this entry?')) {
+        delete logs[date];
+        localStorage.setItem('skincare-log', JSON.stringify(logs));
+        renderLogs();
+        updateStats();
+        showToast('Entry deleted');
+      }
+    }
+
+    function updateStats() {
+      const totalEntries = Object.keys(logs).length;
+      document.getElementById('totalEntries').textContent = totalEntries;
+      
+      // Calculate streak
+      const dates = Object.keys(logs).sort().reverse();
+      let streak = 0;
+      const today = new Date().toISOString().split('T')[0];
+      
+      for (let i = 0; i < dates.length; i++) {
+        const currentDate = new Date(dates[i]);
+        const expectedDate = new Date();
+        expectedDate.setDate(expectedDate.getDate() - i);
+        
+        if (dates[i] === expectedDate.toISOString().split('T')[0]) {
+          streak++;
+        } else {
+          break;
+        }
+      }
+      
+      document.getElementById('streakDays').textContent = streak;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function resetForm() {
+      selectedProducts = [];
+      selectedActivities = [];
+      washedValue = true;
+      
+      // Reset visual elements
+      document.querySelectorAll('.chip.selected').forEach(chip => {
+        chip.classList.remove('selected');
+      });
+      
+      document.querySelectorAll('.toggle-option').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector('.toggle-option[data-value="true"]').classList.add('active');
+      
+      // Reset form fields
+      document.getElementById('logForm').reset();
+      document.getElementById('date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('sleep').value = 7;
+      document.getElementById('sleepValue').textContent = '7';
+      document.getElementById('alcohol').value = 0;
+      
+      // Remove custom product chips
+      document.querySelectorAll('#productChips .chip:not([data-product])').forEach(chip => {
+        chip.remove();
+      });
+    }
+
+    function downloadCSV() {
+      const headers = ['Date', 'Washed', 'Products', 'Sleep', 'Alcohol', 'Activities', 'NewSpots', 'Improved', 'Notes'];
+      const rows = [headers];
+      
+      Object.keys(logs).sort().forEach(date => {
+        const log = logs[date];
+        const products = Array.isArray(log.products) ? log.products : [];
+        const activities = Array.isArray(log.sweat) ? log.sweat : (log.sweat ? [log.sweat] : []);
+        
+        rows.push([
+          date,
+          log.washed ? 'Yes' : 'No',
+          products.join('; '),
+          log.sleep || 0,
+          log.alcohol || 0,
+          activities.join('; '),
+          log.newSpots || '',
+          log.improved || '',
+          (log.notes || '').replace(/[\r\n]+/g, ' ')
+        ]);
+      });
+      
+      const csvContent = rows.map(row => 
+        row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+      ).join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `skin_tracker_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      showToast('Data exported successfully!');
+    }
+
+    // Form submission
+    document.getElementById('logForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const date = document.getElementById('date').value;
+      if (!date) {
+        showToast('Please select a date');
+        return;
+      }
+      
+      const log = {
+        washed: washedValue,
+        products: [...selectedProducts],
+        sleep: parseInt(document.getElementById('sleep').value) || 7,
+        alcohol: parseInt(document.getElementById('alcohol').value) || 0,
+        sweat: [...selectedActivities],
+        newSpots: document.getElementById('newSpots').value.trim(),
+        improved: document.getElementById('improved').value.trim(),
+        notes: document.getElementById('notes').value.trim()
+      };
+      
+      logs[date] = log;
+      localStorage.setItem('skincare-log', JSON.stringify(logs));
+      
+      renderLogs();
+      updateStats();
+      resetForm();
+      showToast('Entry saved successfully! 🎉');
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
