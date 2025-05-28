@@ -471,6 +471,11 @@
               <input type="date" id="date" required>
             </div>
             <div class="form-group">
+              <label>Time</label>
+              <input type="time" id="time">
+            </div>
+
+            <div class="form-group">
               <label>Face Washed?</label>
               <div class="toggle-group">
                 <button type="button" class="toggle-option" data-value="true">Yes ✓</button>
@@ -706,6 +711,12 @@
             <div class="entry-date">${formatDate(date)}</div>
             <button class="entry-delete" onclick="deleteEntry('${date}')">🗑️</button>
           </div>
+          
+          ${log.time ? `<div class="entry-row">
+            <span class="entry-label">Time</span>
+            <span class="entry-value">${log.time}</span>
+          </div>` : ''}
+
           <div class="entry-row">
             <span class="entry-label">Face Washed</span>
             <span class="entry-value">${log.washed ? '✅ Yes' : '❌ No'}</span>
@@ -833,7 +844,7 @@
     }
 
     function downloadCSV() {
-      const headers = ['Date', 'Washed', 'Products', 'Sleep', 'Alcohol', 'Activities', 'NewSpots', 'Improved', 'Notes'];
+      const headers = ['Date', 'Time', 'Washed', 'Products', 'Sleep', 'Alcohol', 'Activities', 'NewSpots', 'Improved', 'Notes'];
       const rows = [headers];
       
       Object.keys(logs).sort().forEach(date => {
@@ -843,6 +854,7 @@
         
         rows.push([
           date,
+          log.time || '',
           log.washed ? 'Yes' : 'No',
           products.join('; '),
           log.sleep || 0,
@@ -881,6 +893,7 @@
       
       const log = {
         washed: washedValue,
+        time: document.getElementById('time').value,
         products: [...selectedProducts],
         sleep: parseInt(document.getElementById('sleep').value) || 7,
         alcohol: parseInt(document.getElementById('alcohol').value) || 0,
@@ -889,6 +902,7 @@
         improved: document.getElementById('improved').value.trim(),
         notes: document.getElementById('notes').value.trim()
       };
+
       
       logs[date] = log;
       localStorage.setItem('skincare-log', JSON.stringify(logs));
